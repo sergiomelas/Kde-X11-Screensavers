@@ -15,16 +15,12 @@ echo  " "
 echo  ""
 
 
-echo  "Login as administrator to romove"
-sudo ls >/dev/null
-echo  ""
-
 #remove wine bottle for scresavers
 rm -r /home/$USER/.winscr
 
 #remove lauchers
 rm /home/$USER/.config/autostart/winscr_screensaver.sh.desktop
-sudo rm /usr/share/applications/WinScreensaver.desktop
+rm /home/$USER/.local/share/applications/WinScreensaver.desktop
 
 
 

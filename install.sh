@@ -64,7 +64,7 @@ cd ..
 
 #Copy autostart and settings lachers
 cd ./'Launch'
-sudo cp ./WinScreensaver.desktop /usr/share/applications/
+cp ./WinScreensaver.desktop /home/$USER/.local/share/applications/
 rm  /home/$USER/.config/autostart/winscr_screensaver.sh.desktop
 cp  ./winscr_screensaver.sh.desktop /home/$USER/.config/autostart/
 cd  /home/$USER/.config/autostart/
