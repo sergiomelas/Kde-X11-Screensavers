@@ -29,8 +29,3 @@ Thx to Christitus for the inspirational post : https://www.youtube.com/watch?v=J
 on youtube ant the info below I used to create this
 
 https://christitus.com/lcars-screensaver/
-
-
-
-
-

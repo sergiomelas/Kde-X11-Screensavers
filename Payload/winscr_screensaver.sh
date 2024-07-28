@@ -15,12 +15,16 @@ echo  " "
 
 # Run the screensaver
 trigger_cmd() {
-    SCR_SAVER=$( cat /home/$USER/.winscr/scrensaver.conf )
-    WINEPREFIX=/home/$USER/.winscr
-    wine /home/$USER/.winscr/drive_c/windows/system32/"$SCR_SAVER" /s
-    LockSc=$( cat /home/$USER/.winscr/lockscreen.conf )
-    if [ $LockSc -gt '0' ]; then
-       loginctl lock-session
+
+    SounRun=$( pacmd list-sink-inputs | grep -c 'state: RUNNING' )
+    if [ $SounRun -eq '0' ]; then
+       SCR_SAVER=$( cat /home/$USER/.winscr/scrensaver.conf )
+       WINEPREFIX=/home/$USER/.winscr
+       wine /home/$USER/.winscr/drive_c/windows/system32/"$SCR_SAVER" /s
+       LockSc=$( cat /home/$USER/.winscr/lockscreen.conf )
+       if [ $LockSc -gt '0' ]; then
+          loginctl lock-session
+       fi
     fi
 }
 
