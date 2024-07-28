@@ -25,7 +25,8 @@ Change log:
  -v2.0 2023: First pubblic release, added lock screen option
 
 
-Thx to christitus for the ispirational post on youtube ant the ifo below i used to create this
+Thx to Christitus for the inspirational post : https://www.youtube.com/watch?v=J2zasJz5vuA&t=384s
+on youtube ant the info below I used to create this
 
 https://christitus.com/lcars-screensaver/
 
