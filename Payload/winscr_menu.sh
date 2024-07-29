@@ -21,7 +21,7 @@ Choice="Choose Screensaver"
 echo  ""
 echo -n "Plese choose an option"
 
-Choice=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "Choose Screensaver" FALSE "Test Screensaver"  FALSE "Configure Screensaver"  FALSE "Configure Timout"  FALSE "About"  )
+Choice=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "Choose Screensaver" FALSE "Test Screensaver"  FALSE "Configure Screensaver"  FALSE "Configure Timout"  FALSE "About"  )
 
 
 case $Choice in

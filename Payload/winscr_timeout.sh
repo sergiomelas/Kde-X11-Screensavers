@@ -13,55 +13,90 @@ echo  " ##################################################################"
 
 
 Tim=15;
-rm /home/$USER/.winscr/timeout.conf
 
-echo  ""
-echo -n "Choose the theme : "
-array=( 'dummy' '30 seconds' '2 minutes' '5 minutes'  '10 minutes' '15 minutes' '30 minutes' '1 hour' 'Screensaver Disabled' )
-Time=$(zenity --entry --title "Window title" --text "${array[@]}" --text "Plese choose the screensaver timeout.")
+
+Tim=$( cat /home/$USER/.winscr/timeout.conf )
+
+
+echo $Tim
+
+case $Tim in
+   '30')
+    Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  TRUE "30 seconds" FALSE "2 minutes"  FALSE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+   ;;
+   '120')
+   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" TRUE "2 minutes"  FALSE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+
+   ;;
+   '300')
+   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes"  TRUE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+
+;;
+   '600')
+   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes"  TRUE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+
+;;
+   '900')
+   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  TRUE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+
+;;
+   '1800')
+   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" TRUE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+
+;;
+   '3600')
+   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" FALSE "30 minutes" TRUE "1 hour" FALSE "Screensaver Disabled"  )
+
+;;
+  '-1')
+   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" FALSE "30 minutes" FALSE "1 hour" TRUE "Screensaver Disabled"  )
+
+;;
+esac
+
 
 if [ -z "$Time" ]
 then
-      zenity --info --timeout 2 --text="No timeout chosen!" #user aborted
+     Time=$Tim #user aborted
 else
     echo  -n "The chosen screesaver is:  $SCR"
     echo $SCR   |  tee -a /home/$USER/.winscr/scrensaver.conf       > /dev/null
 
     case $Time in
-   '30 seconds')
-      echo  "30 seconds"
-      Tim=30;
-   ;;
-   '2 minutes')
-      echo  "2 minutes"
-      Tim=120;
-   ;;
-   '5 minutes')
-      echo  "5 minutes"
-      Tim=300;
+     '30 seconds')
+        echo  "30 seconds"
+        Tim=30;
+     ;;
+     '2 minutes')
+        echo  "2 minutes"
+        Tim=120;
+     ;;
+     '5 minutes')
+        echo  "5 minutes"
+        Tim=300;
+     ;;
+     '10 minutes')
+        echo  "10 minutes"
+        Tim=600;
+     ;;
+    '15 minutes')
+       echo  "15 minutes"
+      Tim=900;
+     ;;
+    '30 minutes')
+       echo  "30 minutes"
+       Tim=1800;
     ;;
-   '10 minutes')
-      echo  "10 minutes"
-      Tim=600;
-    ;;
-   '15 minutes')
-      echo  "15 minutes"
-     Tim=900;
-    ;;
-       '30 minutes')
-      echo  "30 minutes"
-     Tim=1800;
-    ;;
-       '1 hour')
+   '1 hour')
       echo  "1 hour"
-     Tim=3600;
+      Tim=3600;
     ;;
-  'Screensaver Disabled')
+    'Screensaver Disabled')
       echo  "Screensaver Disabled"
-     Tim=-1;
+      Tim=-1;
     ;;
     esac
-
+    rm  /home/$USER/.winscr/timeout.conf
     echo $Tim   |  tee -a /home/$USER/.winscr/timeout.conf       > /dev/null
 
 fi
@@ -69,6 +104,7 @@ fi
 
 cmd="/home/$USER/.winscr/winscr_menu.sh"
 kstart5 bash $cmd  &
+
 
 
 

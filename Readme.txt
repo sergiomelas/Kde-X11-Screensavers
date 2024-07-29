@@ -22,7 +22,7 @@ Installation Instructions:
 Change log:
  -V1.0 2024: Initial version
  -V1.1 2019: Added menu
- -v2.0 2023: First pubblic release, added lock screen option
+ -v2.0 2023: First pubblic release, added lock screen option, memory of timout
 
 
 Thx to Christitus for the inspirational post : https://www.youtube.com/watch?v=J2zasJz5vuA&t=384s
