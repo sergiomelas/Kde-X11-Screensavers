@@ -5,6 +5,8 @@
                      ##################################################################
                      ##################################################################
 
+This collection of scripts implements the usage of windows screensaver in KDE plasma on X11 with a pretty interface
+
 
 Installation Instructions:
 
