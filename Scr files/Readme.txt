@@ -1,1 +1,1 @@
-Copy the windows  screensavers .scr file in this folser folder before install
+Copy the windows  screensavers .scr file in this folder before install
