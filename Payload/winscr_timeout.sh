@@ -14,12 +14,13 @@ echo  " ##################################################################"
 
 Tim=15;
 
-
+#read current timeout
 Tim=$( cat /home/$USER/.winscr/timeout.conf )
 
 
 echo $Tim
 
+#lauch form with current timeout
 case $Tim in
    '30')
     Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option (press 'Cancel' when finished)" --column "Pick" --column "Answer" --radiolist  TRUE "30 seconds" FALSE "2 minutes"  FALSE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
@@ -56,9 +57,9 @@ esac
 
 
 if [ -z "$Time" ]
-then
+then #if no scoice mantain current
      Time=$Tim #user aborted
-else
+else #trasform choice in time
     echo  -n "The chosen screesaver is:  $SCR"
     echo $SCR   |  tee -a /home/$USER/.winscr/scrensaver.conf       > /dev/null
 
@@ -96,12 +97,13 @@ else
       Tim=-1;
     ;;
     esac
+    #write in conf
     rm  /home/$USER/.winscr/timeout.conf
     echo $Tim   |  tee -a /home/$USER/.winscr/timeout.conf       > /dev/null
 
 fi
 
-
+#reopen menu
 cmd="/home/$USER/.winscr/winscr_menu.sh"
 kstart5 bash $cmd  &
 

@@ -30,6 +30,7 @@ else
     echo $SCR   |  tee -a /home/$USER/.winscr/scrensaver.conf       > /dev/null
 fi
 
+#reopen menu
 cmd="/home/$USER/.winscr/winscr_menu.sh"
 kstart5 bash $cmd  &
 

@@ -16,9 +16,10 @@ echo  ""
 
 SCR_SAVER=$( cat /home/$USER/.winscr/scrensaver.conf )
 
+#Start bootle with screensaver configuration
 WINEPREFIX=/home/$USER/.winscr
 wine /home/$USER/.winscr/drive_c/windows/system32/"$SCR_SAVER" /s
 
-
+#reopen menu
 cmd="/home/$USER/.winscr/winscr_menu.sh"
 kstart5 bash $cmd  &

@@ -15,9 +15,9 @@ echo  " "
 echo  ""
 
 echo  "About SCreen"
-zenity --info --timeout 5 --title="About" --text="Developed for X11 and KDE Plasma  by sergio melas 2024" #user aborted
+zenity --info --timeout 5 --title="About" --text="Developed for X11 and KDE Plasma  by sergio melas 2024"
 
-
+#reopen menu
 cmd="/home/$USER/.winscr/winscr_menu.sh"
 kstart5 bash $cmd  &
 

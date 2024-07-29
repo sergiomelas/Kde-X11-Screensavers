@@ -12,7 +12,8 @@ Installation Instructions:
 
 
 - Copy the windows  screensavers .scr file in the "SCR files" folder before install
-- Run Install.sh
+- double click on the Run-me.sh file
+- This will lauch the install.sh script in konsole
 - When wine bottle config arrives chose windows XP
 - Then choose the screensaver and timeout
 - Login Logout to activate
@@ -23,8 +24,8 @@ Installation Instructions:
 ##################################################################################################################
 Change log:
  -V1.0 2024: Initial version
- -V1.1 2019: Added menu
- -v2.0 2023: First pubblic release, added lock screen option, memory of timout
+ -V1.1 2024: Added menu
+ -v2.0 2024: First pubblic release, added lock screen option, memory of timout
 
 
 Thx to Christitus for the inspirational post : https://www.youtube.com/watch?v=J2zasJz5vuA&t=384s

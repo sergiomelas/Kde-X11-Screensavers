@@ -52,6 +52,6 @@ fi
 
 echo $LockSc   |  tee -a /home/$USER/.winscr/lockscreen.conf       > /dev/null
 
-
+#reopen menu
 cmd="/home/$USER/.winscr/winscr_menu.sh"
 kstart5 bash $cmd  &

@@ -68,7 +68,7 @@ cp ./WinScreensaver.desktop /home/$USER/.local/share/applications/
 rm  /home/$USER/.config/autostart/winscr_screensaver.sh.desktop
 cp  ./winscr_screensaver.sh.desktop /home/$USER/.config/autostart/
 cd  /home/$USER/.config/autostart/
-#Icon=<path>/.icon/shredder.png
+#Remove $USER with actual user name in the Exec clause of the autostart laucher (KDE bug workaround)
 command="Exec=/home/$USER/.winscr/winscr_screensaver.sh"
 file="'./winscr_screensaver.sh.desktop'"
 command="echo \""$command" \">>  "$file
