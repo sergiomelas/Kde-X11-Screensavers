@@ -18,7 +18,7 @@ Installation Instructions:
 - Then choose the screensaver and timeout
 - Login Logout to activate
 
-Note to be agle to enjoy the screensaver you shuld set yhe lock screen timeout and screen switch of timout larger of the screesaver timeout in kde plasma options
+Note to be able to enjoy the screensavers you should set the lock screen timeout and screen switch off timeout larger then the screesaver timeout in kde plasma options
 
 
 ##################################################################################################################
