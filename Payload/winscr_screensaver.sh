@@ -17,13 +17,16 @@ echo  " "
 trigger_cmd() {
     #Check if any media is plaing
     SounRun=$( pacmd list-sink-inputs | grep -c 'state: RUNNING' )
+    LockSc=$( cat /home/$USER/.winscr/lockscreen.conf )
     if [ $SounRun -eq '0' ]; then #if not run screensaver
        SCR_SAVER=$( cat /home/$USER/.winscr/scrensaver.conf )
        WINEPREFIX=/home/$USER/.winscr
        wine /home/$USER/.winscr/drive_c/windows/system32/"$SCR_SAVER" /s
-       LockSc=$( cat /home/$USER/.winscr/lockscreen.conf )
-       if [ $LockSc -gt '0' ]; then #if asked lock screen
-          loginctl lock-session
+       SysLockSc=$( qdbus org.freedesktop.ScreenSaver /org/freedesktop/ScreenSaver GetActive ) #ghet tatus of kde lockscreen
+       if [[ "$SysLockSc" == *false* ]]; then #If  kde didnt alredy losked the screen
+          if [ $LockSc -gt '0' ]; then #if asked lock screen
+              loginctl lock-session
+          fi
        fi
     fi
 }

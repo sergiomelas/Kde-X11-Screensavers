@@ -18,17 +18,18 @@ Installation Instructions:
 - Then choose the screensaver and timeout
 - Login Logout to activate
 
-
+Note to be agle to enjoy the screensaver you shuld set yhe lock screen timeout and screen switch of timout larger of the screesaver timeout in kde plasma options
 
 
 ##################################################################################################################
 Change log:
- -V1.0 2024: Initial version
- -V1.1 2024: Added menu
- -v2.0 2024: First pubblic release, added lock screen option, memory of timout
+ -V1.0 25-07-2024: Initial version
+ -V1.1 27-07-2024: Added menu
+ -v2.0 28-07-2024: First pubblic release, added lock screen option,addes memory of timout
+ -V2.1 31-07-2024: Corrected bug with system lockscreen, added memory of lockscreen
 
 
 Thx to Christitus for the inspirational post : https://www.youtube.com/watch?v=J2zasJz5vuA&t=384s
-on youtube ant the info below I used to create this
+on youtube and the info below I used to create this
 
 https://christitus.com/lcars-screensaver/

@@ -20,10 +20,23 @@ WINEPREFIX=/home/$USER/.winscr
 wine /home/$USER/.winscr/drive_c/windows/system32/"$SCR_SAVER"
 
 echo  ""
-rm /home/$USER/.winscr/lockscreen.conf
+
+
 echo -n "Choose the locksession : "
-array=( 'dummy' 'Yes' 'No'  )
-LockScr=$(zenity --entry --title "Lock Screen Configuration:" --text "${array[@]}" --text "Do you want to lock the session after screensaver?")
+
+#lauch form with current timeout
+LockS=$( cat /home/$USER/.winscr/lockscreen.conf )
+case $LockS in
+   '0')
+     LockScr=$(zenity --list  --title="Lock Screen Configuration:" --text "Pick an option " --column "Pick" --column "Answer" --radiolist  TRUE "No" FALSE "Yes"  )
+   ;;
+   '1')
+     LockScr=$(zenity --list  --title="Lock Screen Configuration:" --text "Pick an option " --column "Pick" --column "Answer" --radiolist  FALSE "No" TRUE "Yes"  )
+   ;;
+esac
+
+
+
 
 if [ -z "$LockScr" ]
 then
@@ -50,6 +63,7 @@ else
 
 fi
 
+rm /home/$USER/.winscr/lockscreen.conf
 echo $LockSc   |  tee -a /home/$USER/.winscr/lockscreen.conf       > /dev/null
 
 #reopen menu
