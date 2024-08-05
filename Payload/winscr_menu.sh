@@ -21,7 +21,7 @@ Choice="Choose Screensaver"
 echo  ""
 echo -n "Plese choose an option"
 
-Choice=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer"  --radiolist  FALSE "Choose Screensaver" FALSE "Test Screensaver"  FALSE "Configure Screensaver"  FALSE "Configure Timeout"  FALSE "About"  )
+Choice=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer"  --radiolist  FALSE "Choose Screensaver" FALSE "Test Screensaver"  FALSE "Screensaver Configuration"  FALSE "Locking Screen Configuration" FALSE "Activation Timeout Configuration"  FALSE "About"  )
 
 #process menu choice
 case $Choice in
@@ -35,14 +35,19 @@ case $Choice in
     cmd="/home/$USER/.winscr/winscr_test.sh"
     kstart5 bash $cmd  &
   ;;
-  'Configure Screensaver')
+  'Screensaver Configuration')
     echo  "Configure Screensaver"
     cmd="/home/$USER/.winscr/winscr_configure.sh"
     kstart5 bash $cmd  &
   ;;
-  'Configure Timeout')
+  'Activation Timeout Configuration')
     echo  "Configure Timout"
     cmd="/home/$USER/.winscr/winscr_timeout.sh"
+    kstart5 bash  $cmd  &
+  ;;
+  'Locking Screen Configuration')
+    echo  "Configure Timout"
+    cmd="/home/$USER/.winscr/winscr_lock.sh"
     kstart5 bash  $cmd  &
   ;;
   'About')

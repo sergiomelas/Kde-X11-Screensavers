@@ -2,10 +2,8 @@
 Categories=Settings;Accessibility;
 Comment[en_US]=SCr for you
 Comment=SCr for you
-Exec=/home/$USER/.winscr/winscr_menu.sh
 GenericName[en_US]=
 GenericName=
-Icon=fcitx-fullwidth-inactive
 MimeType=
 Name[en_US]=Windows Screensavers
 Name=Windows Screensavers

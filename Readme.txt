@@ -17,8 +17,10 @@ Installation Instructions:
 - When wine bottle config arrives chose windows XP
 - Then choose the screensaver and timeout
 - Login Logout to activate
+- To intall screensavers that have an installer run:
+WINEPREFIX=/home/$USER/.winscr wine <path to installer>
 
-Note to be able to enjoy the screensavers you should set the lock screen timeout and screen switch off timeout larger then the screesaver timeout in kde plasma options
+Note to be agle to enjoy the screensaver you shuld set yhe lock screen timeout and screen switch of timout larger of the screesaver timeout in kde plasma options
 
 
 ##################################################################################################################
@@ -26,7 +28,7 @@ Change log:
  -V1.0 25-07-2024: Initial version
  -V1.1 27-07-2024: Added menu
  -v2.0 28-07-2024: First pubblic release, added lock screen option,addes memory of timout
- -V2.1 31-07-2024: Corrected bug with system lockscreen, added memory of lockscreen
+ -V2.1 31-07-2024: Corrected bug with system lockscreen and scresaver choice, added memory of lockscreen
 
 
 Thx to Christitus for the inspirational post : https://www.youtube.com/watch?v=J2zasJz5vuA&t=384s

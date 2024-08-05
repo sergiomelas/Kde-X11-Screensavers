@@ -19,52 +19,6 @@ SCR_SAVER=$( cat /home/$USER/.winscr/scrensaver.conf )
 WINEPREFIX=/home/$USER/.winscr
 wine /home/$USER/.winscr/drive_c/windows/system32/"$SCR_SAVER"
 
-echo  ""
-
-
-echo -n "Choose the locksession : "
-
-#lauch form with current timeout
-LockS=$( cat /home/$USER/.winscr/lockscreen.conf )
-case $LockS in
-   '0')
-     LockScr=$(zenity --list  --title="Lock Screen Configuration:" --text "Pick an option " --column "Pick" --column "Answer" --radiolist  TRUE "No" FALSE "Yes"  )
-   ;;
-   '1')
-     LockScr=$(zenity --list  --title="Lock Screen Configuration:" --text "Pick an option " --column "Pick" --column "Answer" --radiolist  FALSE "No" TRUE "Yes"  )
-   ;;
-esac
-
-
-
-
-if [ -z "$LockScr" ]
-then
-      zenity --info --timeout 2 --text="No option chosen! Defaulting to lock screen" #user aborted
-      LockSc=1;
-else
-    echo  -n "The chosen lockscreen option is:  $LockScr"
-
-    case $LockScr in
-     'Yes')
-        echo  "Lock screen active"
-        LockSc=1;
-        ;;
-      'No')
-        echo  "Lock screen inactive"
-        LockSc=0;
-   ;;
-   *)
-   zenity --info --timeout 2 --text="No option chosen! Defaulting to lock screen" #user aborted
-   LockSc=1;
-   ;;
-   esac
-
-
-fi
-
-rm /home/$USER/.winscr/lockscreen.conf
-echo $LockSc   |  tee -a /home/$USER/.winscr/lockscreen.conf       > /dev/null
 
 #reopen menu
 cmd="/home/$USER/.winscr/winscr_menu.sh"

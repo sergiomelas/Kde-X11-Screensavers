@@ -18,17 +18,20 @@ echo  ""
 echo  ""
 echo -n "Choose the screensaver : "
 
-rm /home/$USER/.winscr/scrensaver.conf
+
 readarray array < <((cd  /home/$USER/.winscr/drive_c/windows/system32 &&ls *.scr))
 array=( "Dummy" "${array[@]}" )
 SCR=$(zenity --entry --title "Winscr Chooser" --text "${array[@]}" --text "Plese choose the screensaver")
+SCR_SAVER=$( cat /home/$USER/.winscr/scrensaver.conf )
 if [ -z "$SCR" ]
 then
-      zenity --info --timeout 2 --text="No screesaver chosen!" #user aborted
+    zenity --info --timeout 2 --text="No screesaver chosen!" #user aborted
+    SCR=$SCR_SAVER
 else
     echo  -n "The chosen screesaver is:  $SCR"
-    echo $SCR   |  tee -a /home/$USER/.winscr/scrensaver.conf       > /dev/null
 fi
+rm /home/$USER/.winscr/scrensaver.conf
+echo $SCR | tee -a /home/$USER/.winscr/scrensaver.conf  > /dev/null
 
 #reopen menu
 cmd="/home/$USER/.winscr/winscr_menu.sh"

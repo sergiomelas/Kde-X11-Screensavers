@@ -23,34 +23,34 @@ echo $Tim
 #lauch form with current timeout
 case $Tim in
    '30')
-    Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  TRUE "30 seconds" FALSE "2 minutes"  FALSE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  TRUE "30 seconds" FALSE "2 minutes"  FALSE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
    ;;
    '120')
-   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" TRUE "2 minutes"  FALSE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" TRUE "2 minutes"  FALSE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
 
    ;;
    '300')
-   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes"  TRUE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes"  TRUE "5 minutes"  FALSE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
 
 ;;
    '600')
-   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes"  TRUE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes"  TRUE "10 minutes"  FALSE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
 
 ;;
    '900')
-   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  TRUE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  TRUE "15 minutes" FALSE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
 
 ;;
    '1800')
-   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" TRUE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" TRUE "30 minutes" FALSE "1 hour" FALSE "Screensaver Disabled"  )
 
 ;;
    '3600')
-   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" FALSE "30 minutes" TRUE "1 hour" FALSE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" FALSE "30 minutes" TRUE "1 hour" FALSE "Screensaver Disabled"  )
 
 ;;
   '-1')
-   Time=$(zenity --list  --title="Win Screensavers Menu" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" FALSE "30 minutes" FALSE "1 hour" TRUE "Screensaver Disabled"  )
+   Time=$(zenity --list  --title="Scrennesaver Timeout Configuration" --text "Pick an option" --column "Pick" --column "Answer" --radiolist  FALSE "30 seconds" FALSE "2 minutes" FALSE  "5 minutes" FALSE  "10 minutes"  FALSE  "15 minutes" FALSE "30 minutes" FALSE "1 hour" TRUE "Screensaver Disabled"  )
 
 ;;
 esac

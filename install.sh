@@ -63,16 +63,31 @@ cp * /home/$USER/.winscr
 cd ..
 
 #Copy autostart and settings lachers
+rm  /home/$USER/.config/autostart/winscr_screensaver.sh.desktop
+rm  /home/$USER/.local/share/applications/WinScreensaver.desktop
 cd ./'Launch'
 cp ./WinScreensaver.desktop /home/$USER/.local/share/applications/
-rm  /home/$USER/.config/autostart/winscr_screensaver.sh.desktop
-cp  ./winscr_screensaver.sh.desktop /home/$USER/.config/autostart/
+cp ./winscr_screensaver.sh.desktop /home/$USER/.config/autostart/
+
 cd  /home/$USER/.config/autostart/
 #Remove $USER with actual user name in the Exec clause of the autostart laucher (KDE bug workaround)
 command="Exec=/home/$USER/.winscr/winscr_screensaver.sh"
 file="'./winscr_screensaver.sh.desktop'"
 command="echo \""$command" \">>  "$file
 eval $command
+
+cd  /home/$USER/.local/share/applications/
+#Remove $USER with actual user name in the Exec clause of the autostart laucher (KDE bug workaround)
+command="Icon=/home/$USER/.winscr/winscr_icon.png"
+file="'./WinScreensaver.desktop'"
+command="echo \""$command" \">>  "$file
+eval $command
+
+command="Exec=/home/$USER/.winscr/winscr_menu.sh"
+file="'./WinScreensaver.desktop'"
+command="echo \""$command" \">>  "$file
+eval $command
+
 
 #Run the first config
 kstart5 bash /home/$USER/.winscr/winscr_choose.sh
