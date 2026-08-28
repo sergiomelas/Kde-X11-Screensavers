@@ -93,6 +93,11 @@ trigger_cmd() {
 
     # CASE B: User selected "Random" -> Read directly from guaranteed pool configuration
     if [[ "$CURRENT_SELECTION" == "Random.scr" ]]; then
+        # Auto-initialize pool list from installed system32 screensavers if missing
+        if [ ! -f "$RANDOM_CONF" ]; then
+            find "$SCR_DIR" -maxdepth 1 -iname "*.scr" -printf "%f\n" > "$RANDOM_CONF" 2>/dev/null
+        fi
+
         while IFS= read -r line; do
             local clean_line=$(echo "$line" | tr -d '\r')
             [[ -n "$clean_line" && -f "$SCR_DIR/$clean_line" ]] && VALID_ARRAY+=("$SCR_DIR/$clean_line")
@@ -118,11 +123,11 @@ trigger_cmd() {
         local REAL_OLD_PID
         REAL_OLD_PID=$(pgrep -f "\.scr" | head -n 1)
 
-        # Query database for backend rendering preference based on the target filename
+        # Query database for backend rendering preference based on the target filename (case-insensitive)
         local target_base=$(basename "$CURRENT_SCR")
         local backend_tag="standard"
         if [ -f "$WINEPREFIX_PATH/scr_database" ]; then
-            local matched_tag=$(grep "^${target_base}:" "$WINEPREFIX_PATH/scr_database" | cut -d':' -f2)
+            local matched_tag=$(grep -i "^${target_base}:" "$WINEPREFIX_PATH/scr_database" | head -n 1 | cut -d':' -f2)
             if [ -n "$matched_tag" ]; then
                 backend_tag="$matched_tag"
             fi

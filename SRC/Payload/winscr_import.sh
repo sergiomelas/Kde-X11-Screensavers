@@ -16,6 +16,19 @@ SCR_DEST="$WINEPREFIX_PATH/drive_c/windows/system32"
 
 # --- HELPER: STANDARDIZED RELAUNCH ---
 relaunch_menu() {
+    # 0. Safely append newly imported screensavers to the random pool without wiping custom selections
+    local RANDOM_CONF="$WINEPREFIX_PATH/random_list.conf"
+    if [ ! -f "$RANDOM_CONF" ]; then
+        find "$SCR_DEST" -maxdepth 1 -iname "*.scr" -printf "%f\n" > "$RANDOM_CONF" 2>/dev/null
+    else
+        # Append any installed screensaver not already present in the config
+        while IFS= read -r scr_file; do
+            if ! grep -qxF "$scr_file" "$RANDOM_CONF"; then
+                echo "$scr_file" >> "$RANDOM_CONF"
+            fi
+        done < <(find "$SCR_DEST" -maxdepth 1 -iname "*.scr" -printf "%f\n" 2>/dev/null)
+    fi
+
     # 1. Clean the lock file so the new menu can start
     rm -f "$WINEPREFIX_PATH/.running"
 
@@ -155,7 +168,7 @@ if [ -n "$SCR_SOURCE" ]; then
             for filename in "${SELECTED_FILES[@]}"; do
                 local ext="${filename##*.}"
                 local base="${filename%.*}"
-                local target_name="${base,,}.${ext,,}"
+                local target_name="${base}.${ext,,}"
                 if [ -f "$SCR_DEST/$target_name" ]; then continue; fi
 
                 if [[ "${filename,,}" == *.scr ]]; then

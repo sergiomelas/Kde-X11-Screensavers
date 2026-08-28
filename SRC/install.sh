@@ -84,7 +84,11 @@ X-GNOME-Autostart-enabled=true
 Name=WinScreensaver Service
 EOF
 
-# 3. POST-DEPLOYMENT: INTELLIGENT REFRESH
+# 3. REGISTER BACKGROUND SERVICE & RESTART PROCESS IMMEDIATELY
+pkill -f "winscr_screensaver.sh"
+bash "$WINEPREFIX_PATH/winscr_screensaver.sh" &
+
+# 4. POST-DEPLOYMENT: INTELLIGENT REFRESH
 # Check if system32 is empty
 SCR_COUNT=$(find "$SCR_DEST" -maxdepth 1 -iname "*.scr" | wc -l)
 
@@ -103,10 +107,6 @@ else
         bash "$WINEPREFIX_PATH/winscr_import.sh"
     fi
 fi
-
-# 4. RESTART BACKGROUND PROCESS (Always restart after updates)
-pkill -f "winscr_screensaver.sh"
-bash "$WINEPREFIX_PATH/winscr_screensaver.sh" &
 
 # 5. UNLOCK & FINISH
 rm -f "$WINEPREFIX_PATH/.running"
