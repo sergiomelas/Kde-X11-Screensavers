@@ -40,6 +40,16 @@ Good Source for Windows(c) screesavers: https://www.screensaversplanet.com/scree
 ##################################################################################################################
 Change log:
 
+- V5.0    27-08-2026: Introduced "Rendering Backend Manager" for per-screensaver
+                      dynamic switching between Standard (WineD3D) and DXVK.
+                      Added centralized persistent database (scr_database)
+                      to store rendering preferences and streamline overrides.
+                      Upgraded system version consistency across build scripts
+                      and about dialogs.
+                      Fixed case-insensitive database matching for Windows
+                      screensavers and suppressed duplicate window spawns
+                      during imports.
+
 - V4.1    09-07-2026: Implemented "Surgical QA Engine":
                       High-precision Group CPU Delta monitoring to distinguish
                       active screensavers from "zombie" processes.

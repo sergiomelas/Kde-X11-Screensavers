@@ -21,7 +21,7 @@ echo " ##################################################################"
 echo " "
 
 PACKAGE_NAME="winscreensaver"
-VERSION="4.1"
+VERSION="5.0"
 BUILD_ROOT="./${PACKAGE_NAME}_${VERSION}"
 
 # 1. CLEAN & PREPARE
@@ -39,7 +39,7 @@ Version: $VERSION
 Section: utils
 Priority: optional
 Architecture: all
-Depends: wine, wine32, xprintidle, x11-utils, procps, swayidle, zenity, xdotool
+Depends: wine, wine32, xprintidle, x11-utils, procps, swayidle, zenity, xdotool, dxvk, dxvk-wine32, dxvk-wine64
 Maintainer: ${MAINTAINER}
 Description: Windows .scr manager for Linux.
 EOF

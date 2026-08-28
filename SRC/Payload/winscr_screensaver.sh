@@ -118,8 +118,22 @@ trigger_cmd() {
         local REAL_OLD_PID
         REAL_OLD_PID=$(pgrep -f "\.scr" | head -n 1)
 
-        # 1. START THE NEW SCREENSAVER INSIDE AN ISOLATED SUB-SHELL
-        (wine "$CURRENT_SCR" /s >/dev/null 2>&1) &
+        # Query database for backend rendering preference based on the target filename
+        local target_base=$(basename "$CURRENT_SCR")
+        local backend_tag="standard"
+        if [ -f "$WINEPREFIX_PATH/scr_database" ]; then
+            local matched_tag=$(grep "^${target_base}:" "$WINEPREFIX_PATH/scr_database" | cut -d':' -f2)
+            if [ -n "$matched_tag" ]; then
+                backend_tag="$matched_tag"
+            fi
+        fi
+
+        # 1. START THE NEW SCREENSAVER INSIDE AN ISOLATED SUB-SHELL WITH DYNAMIC OVERRIDE
+        if [ "$backend_tag" == "dxvk" ]; then
+            (WINEDLLOVERRIDES="d3d9,dxgi=native,builtin" wine "$CURRENT_SCR" /s >/dev/null 2>&1) &
+        else
+            (WINEDLLOVERRIDES="d3d9,dxgi=builtin" wine "$CURRENT_SCR" /s >/dev/null 2>&1) &
+        fi
 
         local ROT_RAW=$(get_cached_config "$WINEPREFIX_PATH/random_period.conf" "1")
         local ROT_TARGET_SECONDS=$(( ROT_RAW == 0 ? 30 : ROT_RAW ))

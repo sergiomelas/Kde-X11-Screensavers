@@ -41,6 +41,7 @@ relaunch_menu() {
 
 # All values now in SECONDS
 OPTIONS=(
+    "5 seconds" 5
     "10 seconds" 10
     "30 seconds" 30
     "1 minute"   60

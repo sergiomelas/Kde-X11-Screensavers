@@ -84,6 +84,22 @@ if [ -f "$SCR_DIR/$TARGET_SCR" ]; then
     # RELEASE LOCK BEFORE WINE so the test window has focus
     rm -f "$WINEPREFIX_PATH/.running"
 
+    # Query database for backend rendering preference (default to standard if not found)
+    backend_tag="standard"
+    if [ -f "$WINEPREFIX_PATH/scr_database" ]; then
+        matched_tag=$(grep "^${TARGET_SCR}:" "$WINEPREFIX_PATH/scr_database" | cut -d':' -f2)
+        if [ -n "$matched_tag" ]; then
+            backend_tag="$matched_tag"
+        fi
+    fi
+
+    # Assign appropriate WINEDLLOVERRIDES based on registry tag
+    if [ "$backend_tag" == "dxvk" ]; then
+        export WINEDLLOVERRIDES="d3d9,dxgi=native,builtin"
+    else
+        export WINEDLLOVERRIDES="d3d9,dxgi=builtin"
+    fi
+
     # WINEDEBUG=-all keeps the console clean
     # /s is the Windows flag for "Start Screensaver" mode
     WINEDEBUG=-all wine "$SCR_DIR/$TARGET_SCR" /s

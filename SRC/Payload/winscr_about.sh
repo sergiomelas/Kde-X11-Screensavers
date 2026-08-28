@@ -17,7 +17,7 @@ WINEPREFIX_PATH="$HOME/.winscr"
 SYS_PAYLOAD="/usr/share/winscreensaver/Payload"
 GITHUB_REPO="sergiomelas/WinScreensavers"
 GITHUB_URL="https://github.com/$GITHUB_REPO"
-CURRENT_VER="4.1"
+CURRENT_VER="5.0"
 
 # --- HELPER: STANDARDIZED RELAUNCH ---
 relaunch_menu() {

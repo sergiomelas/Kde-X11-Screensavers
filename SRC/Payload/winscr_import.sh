@@ -27,9 +27,10 @@ relaunch_menu() {
         bash "$WINEPREFIX_PATH/winscr_screensaver.sh" &
     fi
 
-    # 3. Always launch the menu script directly
-    # This ignores the 'winscreensaver' command check and uses your script
-    bash "$WINEPREFIX_PATH/winscr_menu.sh" &
+    # 3. Only launch a new menu instance if one isn't already active in the background
+    if ! pgrep -f "winscr_menu.sh" >/dev/null; then
+        bash "$WINEPREFIX_PATH/winscr_menu.sh" &
+    fi
 
     # 4. Exit
     exit 0
@@ -39,30 +40,56 @@ relaunch_menu() {
 test_screensaver() {
     local screen_path="$1"
     local proc_base=$(basename "$screen_path")
+
+    # Database path declaration
+    local db_file="$WINEPREFIX_PATH/scr_database"
+    touch "$db_file"
+
+    local ext="${proc_base##*.}"
+    local base="${proc_base%.*}"
+    local target_name="${base}.${ext,,}"
+
+    # REQUIREMENT 2: Test DXVK first. If it works, save as dxvk.
+    if run_qa_pass "$screen_path" "$proc_base" "native,builtin"; then
+        update_database_registry "$target_name" "dxvk"
+        return 0
+    fi
+
+    # REQUIREMENT 2: If DXVK fails, test standard. If it works, save as standard.
+    if run_qa_pass "$screen_path" "$proc_base" "builtin"; then
+        update_database_registry "$target_name" "standard"
+        return 0
+    fi
+
+    # REQUIREMENT 2: If both fail, skip (return failure)
+    return 1
+}
+
+run_qa_pass() {
+    local screen_path="$1"
+    local proc_base="$2"
+    local d3d_override="$3"
     local retries=1
 
     while [ $retries -gt 0 ]; do
-        # 1. Launch wine and capture PID
-        wine "$screen_path" /s >/dev/null 2>&1 &
+        # Launch wine with specific DLL override and capture PID
+        WINEDLLOVERRIDES="d3d9,dxgi=$d3d_override" wine "$screen_path" /s >/dev/null 2>&1 &
         local test_pid=$!
         sleep 3 # Give it time to initialize
 
-        # 2. SESSION-SPECIFIC DETECTION
+        # SESSION-SPECIFIC DETECTION
         if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
             local is_visible="NO"
-            # Wayland: Query KWin via D-Bus
             if qdbus org.kde.KWin /KWin org.kde.KWin.queryWindowInfo 2>/dev/null | grep -q "pid: $test_pid"; then
                 is_visible="YES"
             fi
 
-            # 3. SURGICAL CLEANUP
             kill -9 "$test_pid" 2>/dev/null
             pkill -9 -P "$test_pid" 2>/dev/null
             wineserver -k 2>/dev/null
 
-            # 4. DECISION
             if [[ "$is_visible" == "YES" ]]; then
-                return 0 # Validated!
+                return 0
             fi
         else
             local log_file="/tmp/wine_test.log"
@@ -70,25 +97,34 @@ test_screensaver() {
             export WAYLAND_DISPLAY=$WAYLAND_DISPLAY
             export XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
 
-            # Detection: If process is dead OR if there is an error window
             if ! pgrep -f "$proc_base" >/dev/null || wmctrl -l 2>/dev/null | grep -qi "Program Error"; then
                 pkill -f "$proc_base" 2>/dev/null
                 wmctrl -c "Program Error" 2>/dev/null
                 rm -f "$log_file"
-                # Logic continues to retry if return 1 is not triggered here
             else
                 pkill -f "$proc_base" 2>/dev/null
                 rm -f "$log_file"
-                return 0 # Success
+                return 0
             fi
         fi
 
-        # If we failed, wait a bit and try again
         ((retries--))
         sleep 1
     done
 
-    return 1 # Failed
+    return 1
+}
+
+update_database_registry() {
+    local filename="$1"
+    local backend="$2"
+    local db_file="$WINEPREFIX_PATH/scr_database"
+
+    # Remove existing entry if present, then append new tag
+    if [ -f "$db_file" ]; then
+        grep -v "^${filename}:" "$db_file" > "${db_file}.tmp" && mv "${db_file}.tmp" "$db_file"
+    fi
+    echo "${filename}:${backend}" >> "$db_file"
 }
 
 
@@ -117,18 +153,20 @@ if [ -n "$SCR_SOURCE" ]; then
         if [ $? -eq 0 ] && [ -n "$CHOICE" ]; then
             IFS="|" read -ra SELECTED_FILES <<< "$CHOICE"
             for filename in "${SELECTED_FILES[@]}"; do
-                target_name="${filename%.*}.${filename##*.}"
-                if [ -f "$SCR_DEST/${target_name,,}" ]; then continue; fi
+                local ext="${filename##*.}"
+                local base="${filename%.*}"
+                local target_name="${base,,}.${ext,,}"
+                if [ -f "$SCR_DEST/$target_name" ]; then continue; fi
 
-                if [[ "$filename" == *.scr ]]; then
+                if [[ "${filename,,}" == *.scr ]]; then
                     if test_screensaver "$SCR_SOURCE/$filename"; then
-                        cp -vn "$SCR_SOURCE/$filename" "$SCR_DEST/${filename%.*}.${filename##*.}"
+                        cp -vn "$SCR_SOURCE/$filename" "$SCR_DEST/$target_name"
                         ((imported++))
                     else
                         ((skipped++))
                     fi
                 else
-                    cp -vn "$SCR_SOURCE/$filename" "$SCR_DEST/$filename"
+                    cp -vn "$SCR_SOURCE/$filename" "$SCR_DEST/$target_name"
                 fi
             done
         fi
@@ -158,7 +196,7 @@ if [ -n "$SCR_SOURCE" ]; then
                 echo "# Testing: $filename"
 
                 if test_screensaver "$full_path"; then
-                    cp -vn "$full_path" "$SCR_DEST/$target_name"
+                    cp -vn "$full_path" "$SCR_DEST/${target_name,,}"
                     IFS=":" read -r imp skip exist < /tmp/import_stats
                     echo "$((imp+1)):$skip:$exist" > /tmp/import_stats
                 else
@@ -177,8 +215,6 @@ if [ -n "$SCR_SOURCE" ]; then
             --width=300
     fi
 fi
-
-
 
 relaunch_menu
 exit 0

@@ -49,7 +49,7 @@ CHECK_CONFIGS=(
 CHECK_SCRIPTS=(
     "winscr_about.sh" "winscr_import.sh" "winscr_random_choose.sh" "winscr_test.sh"
     "winscr_choose.sh" "winscr_lock.sh" "winscr_random_period.sh" "winscr_timeout.sh"
-    "winscr_configure.sh" "winscr_menu.sh" "winscr_screensaver.sh" "winscr_remove.sh"
+    "winscr_configure.sh" "winscr_menu.sh" "winscr_screensaver.sh" "winscr_remove.sh" "winscr_backend.sh"
 )
 
 # Execute the Audit
@@ -73,10 +73,32 @@ fi
 SCR_COUNT=$(find "$SCR_DIR" -maxdepth 1 -iname "*.scr" 2>/dev/null | wc -l)
 if [ "$SCR_COUNT" -eq 0 ]; then MISSING_CRAP=1; fi
 
+# D. PAYLOAD CRC & MISSING FILE AUDIT
+if [ "$MISSING_CRAP" -eq 0 ] && [ -d "/usr/share/winscreensaver/Payload" ]; then
+    for payload_file in /usr/share/winscreensaver/Payload/*.sh; do
+        script_name=$(basename "$payload_file")
+        local_file="$WINEPREFIX_PATH/$script_name"
+
+        # Check if missing entirely
+        if [ ! -f "$local_file" ]; then
+            MISSING_CRAP=1
+            break
+        fi
+
+        # Check if checksum (CRC/MD5) differs from the updated package payload
+        sys_sum=$(md5sum "$payload_file" | awk '{print $1}')
+        local_sum=$(md5sum "$local_file" | awk '{print $1}')
+        if [ "$sys_sum" != "$local_sum" ]; then
+            MISSING_CRAP=1
+            break
+        fi
+    done
+fi
+
 # Rebuild Trigger
 if [ "$MISSING_CRAP" -eq 1 ]; then
     if zenity --question --title="Integrity Failure" \
-       --text="Missing registry files, scripts, or screensavers detected.\n\nRebuild environment now?" --width=400; then
+       --text="Outdated, missing, or modified scripts detected.\n\nRebuild/Update environment now?" --width=400; then
         rm -f ".running"
         bash /usr/share/winscreensaver/install.sh
         exit 0
@@ -104,6 +126,7 @@ MENU_ITEMS+=(
     FALSE "Screensaver Activation Timeout"
     FALSE "Import Screensavers Files"
     FALSE "Remove Screensavers Files"
+    FALSE "Configure Rendering Backend"
     FALSE "About and Updates"
 )
 
@@ -129,6 +152,7 @@ case $Choice in
     'About and Updates')                ACTION="winscr_about.sh" ;;
     'Import Screensavers Files')        ACTION="winscr_import.sh" ;;
     'Remove Screensavers Files')        ACTION="winscr_remove.sh" ;;
+    'Configure Rendering Backend')      ACTION="winscr_backend.sh" ;;
 esac
 
 # --- 5. UNIVERSAL HANDOVER ---

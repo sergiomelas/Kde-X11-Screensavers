@@ -33,6 +33,38 @@ echo "Initializing Wine Prefix and Rebuilding Registry..."
 # wineboot -u ensures .reg files (user.reg, system.reg, userdef.reg) are healthy
 wineboot -u > /dev/null 2>&1
 
+# Phase 5.0: Provision DXVK DLLs into Wine architecture paths from Debian package
+SYS64="$WINEPREFIX_PATH/drive_c/windows/system32"
+SYS32="$WINEPREFIX_PATH/drive_c/windows/syswow64"
+
+if [ -d "$SYS64" ]; then
+    for dll in d3d9.dll dxgi.dll d3d11.dll d3d10core.dll; do
+        for src_dir in "/usr/lib/dxvk/wine64" "/usr/lib/x86_64-linux-gnu/dxvk" "$DXVK_SHARE/win64"; do
+            if [ -f "$src_dir/$dll" ]; then
+                ln -sf "$src_dir/$dll" "$SYS64/$dll"
+                break
+            elif [ -f "$src_dir/$dll.so" ]; then
+                ln -sf "$src_dir/$dll.so" "$SYS64/$dll"
+                break
+            fi
+        done
+    done
+fi
+
+if [ -d "$SYS32" ]; then
+    for dll in d3d9.dll dxgi.dll d3d11.dll d3d10core.dll; do
+        for src_dir in "/usr/lib/dxvk/wine32" "/usr/lib/i386-linux-gnu/dxvk" "$DXVK_SHARE/win32"; do
+            if [ -f "$src_dir/$dll" ]; then
+                ln -sf "$src_dir/$dll" "$SYS32/$dll"
+                break
+            elif [ -f "$src_dir/$dll.so" ]; then
+                ln -sf "$src_dir/$dll.so" "$SYS32/$dll"
+                break
+            fi
+        done
+    done
+fi
+
 # 2. DEPLOY PAYLOAD
 echo "Deploying scripts and configurations..."
 

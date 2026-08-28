@@ -86,6 +86,12 @@ if [[ -n "$SELECTED_NAMES" ]]; then
             if [[ -f "$RANDOM_CONF" ]]; then
                 sed -i "/^$full_file$/d" "$RANDOM_CONF"
             fi
+
+            # Clean up the rendering backend database
+            if [[ -f "$WINEPREFIX_PATH/scr_database" ]]; then
+                grep -v "^${full_file}:" "$WINEPREFIX_PATH/scr_database" > "$WINEPREFIX_PATH/scr_database.tmp" 2>/dev/null || true
+                mv -f "$WINEPREFIX_PATH/scr_database.tmp" "$WINEPREFIX_PATH/scr_database"
+            fi
         done <<< "$SELECTED_NAMES"
 
         zenity --info --text="Uninstallation complete." --timeout=2
