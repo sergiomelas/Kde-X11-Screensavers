@@ -145,7 +145,7 @@ update_database_registry() {
 echo "Scanning home for screensaver collections..."
 BEST_FOLDER=$(find "$HOME" -maxdepth 9 -iname "*.scr" -not -path "*/.*" -not -path "$WINEPREFIX_PATH/*" -print -quit 2>/dev/null | xargs -0 -I {} dirname "{}")
 
-SCR_SOURCE=$(zenity --file-selection --directory --title="Select folder containing .scr files" --filename="${BEST_FOLDER}/" --width=600)
+SCR_SOURCE=$(zenity --file-selection --directory --title="Select folder containing .scr files" --filename="${BEST_FOLDER}" --width=600)
 
 # --- MAIN LOGIC BLOCK ---
 if [ -n "$SCR_SOURCE" ]; then

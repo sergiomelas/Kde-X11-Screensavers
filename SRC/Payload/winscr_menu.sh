@@ -37,19 +37,37 @@ echo $$ > ".running"
 MISSING_CRAP=0
 
 # A. CHECK DIRECTORIES
-CHECK_DIRS=("dosdevices" "drive_c")
+CHECK_DIRS=(
+     "dosdevices"
+     "drive_c"
+)
 
 # B. CHECK CONFIGURATION & REGISTRY FILES
 CHECK_CONFIGS=(
-    "random_period.conf" "timeout.conf" "scrensaver.conf"
-    "lockscreen.conf" "userdef.reg" "system.reg" "user.reg"
+    "random_period.conf"
+    "timeout.conf"
+    "scrensaver.conf"
+    "lockscreen.conf"
+    "userdef.reg"
+    "system.reg"
+    "user.reg"
 )
 
 # C. CHECK LOGIC SCRIPTS
 CHECK_SCRIPTS=(
-    "winscr_about.sh" "winscr_import.sh" "winscr_random_choose.sh" "winscr_test.sh"
-    "winscr_choose.sh" "winscr_lock.sh" "winscr_random_period.sh" "winscr_timeout.sh"
-    "winscr_configure.sh" "winscr_menu.sh" "winscr_screensaver.sh" "winscr_remove.sh" "winscr_backend.sh"
+    "winscr_about.sh"
+    "winscr_import.sh"
+    "winscr_random_choose.sh"
+    "winscr_test.sh"
+    "winscr_choose.sh"
+    "winscr_lock.sh"
+    "winscr_random_period.sh"
+    "winscr_timeout.sh"
+    "winscr_configure.sh"
+    "winscr_menu.sh"
+    "winscr_screensaver.sh"
+    "winscr_remove.sh"
+    "winscr_backend.sh"
 )
 
 # Execute the Audit
@@ -142,17 +160,17 @@ fi
 
 # --- 4. ACTION DISPATCHER ---
 case $Choice in
-    'Choose Screensaver')               ACTION="winscr_choose.sh" ;;
-    'Choose Random List Pool')          ACTION="winscr_random_choose.sh" ;;
-    'Pool Random Switch Period')        ACTION="winscr_random_period.sh" ;;
+    'Choose Screensaver')                        ACTION="winscr_choose.sh" ;;
+    'Choose Random List Pool')                   ACTION="winscr_random_choose.sh" ;;
+    'Pool Random Switch Period')                 ACTION="winscr_random_period.sh" ;;
     'Test Screensaver'|'Test Pool Screensavers') ACTION="winscr_test.sh" ;;
-    'Configure Screensaver')            ACTION="winscr_configure.sh" ;;
-    'Screensaver Activation Timeout')   ACTION="winscr_timeout.sh" ;;
-    'Lock Screen Configuration')        ACTION="winscr_lock.sh" ;;
-    'About and Updates')                ACTION="winscr_about.sh" ;;
-    'Import Screensavers Files')        ACTION="winscr_import.sh" ;;
-    'Remove Screensavers Files')        ACTION="winscr_remove.sh" ;;
-    'Configure Rendering Backend')      ACTION="winscr_backend.sh" ;;
+    'Configure Screensaver')                     ACTION="winscr_configure.sh" ;;
+    'Screensaver Activation Timeout')            ACTION="winscr_timeout.sh" ;;
+    'Lock Screen Configuration')                 ACTION="winscr_lock.sh" ;;
+    'About and Updates')                         ACTION="winscr_about.sh" ;;
+    'Import Screensavers Files')                 ACTION="winscr_import.sh" ;;
+    'Remove Screensavers Files')                 ACTION="winscr_remove.sh" ;;
+    'Configure Rendering Backend')               ACTION="winscr_backend.sh" ;;
 esac
 
 # --- 5. UNIVERSAL HANDOVER ---

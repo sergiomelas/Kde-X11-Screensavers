@@ -1,7 +1,6 @@
 #!/bin/bash
 # filename: build_winscr_deb.sh
-# Final version 2026 - Universal Edition (Fixes First-Run Icon/Path Bug)
-# Developed for X11/Wayland & KDE/Gnome/XFCE by sergio melas 2026
+# Final version 2026 - Corrected for SRC/ directory structure
 
 # Identity Configuration
 export DEBFULLNAME="Sergio Melas"
@@ -54,11 +53,9 @@ exit 0
 EOF
 chmod 755 "$BUILD_ROOT/DEBIAN/postinst"
 
-# 4. SYSTEM ASSETS (THE FIX)
-# Install icon to global system path
-cp Payload/winscr_icon.png "$BUILD_ROOT/usr/share/pixmaps/winscreensaver.png"
+# 4. SYSTEM ASSETS
+cp SRC/Payload/winscr_icon.png "$BUILD_ROOT/usr/share/pixmaps/winscreensaver.png"
 
-# Install desktop entry to global applications path
 cat <<EOF > "$BUILD_ROOT/usr/share/applications/winscreensaver.desktop"
 [Desktop Entry]
 Name=WinScreensaver
@@ -69,10 +66,9 @@ Type=Application
 Categories=Utility;Settings;
 EOF
 
-# 5. DEPLOY PAYLOAD
-cp install.sh remove.sh "$BUILD_ROOT/usr/share/winscreensaver/"
-cp Payload/winscr_*.sh "$BUILD_ROOT/usr/share/winscreensaver/Payload/" 2>/dev/null
-cp Payload/*.conf "$BUILD_ROOT/usr/share/winscreensaver/Payload/" 2>/dev/null
+# 5. DEPLOY PAYLOAD FROM SRC/
+cp SRC/install.sh SRC/remove.sh "$BUILD_ROOT/usr/share/winscreensaver/"
+cp SRC/Payload/* "$BUILD_ROOT/usr/share/winscreensaver/Payload/"
 
 # 6. SYSTEM BINARY WRAPPER
 cat <<EOF > "$BUILD_ROOT/usr/bin/winscreensaver"
